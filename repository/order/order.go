@@ -28,7 +28,6 @@ func (o *store) CreateOrder(bReq model.Order) (*uuid.UUID, *string, error) {
 			user_id,
 			payment_type_id,
 			order_number,
-			subtotal_price,
 			total_price,
 			product_order,
 			status,
@@ -36,7 +35,7 @@ func (o *store) CreateOrder(bReq model.Order) (*uuid.UUID, *string, error) {
 			ref_code,
 			created_at
 		) VALUES (
-			$1, $2, $3, $4, $5, $6, $7, $8, $9, NOW()
+			$1, $2, $3, $4, $5, $6, $7, $8, NOW()
 		) RETURNING id, ref_code
 	`
 
@@ -47,7 +46,6 @@ func (o *store) CreateOrder(bReq model.Order) (*uuid.UUID, *string, error) {
 		bReq.UserID,
 		bReq.PaymentTypeID,
 		bReq.OrderNumber,
-		bReq.SubtotalPrice,
 		bReq.TotalPrice,
 		bReq.ProductOrder,
 		bReq.Status,
@@ -81,7 +79,7 @@ func (o *store) CreateOrderItemsLogs(bReq model.OrderItemsLogs) (*string, error)
 			notes,
 			created_at
 		) VALUES (
-			$1, $2, $3, $4, NOW()
+			$1, $2, $3, $4, $5, NOW()
 		) RETURNING ref_code
 	`
 
