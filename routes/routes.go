@@ -1,20 +1,24 @@
 package routes
 
 import (
-	"Base-Project/config"
-	"Base-Project/middleware"
+	"cart-order-service/config"
+	cart "cart-order-service/handler/cart"
+	order "cart-order-service/handler/order"
 	"fmt"
-	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"time"
+
+	"github.com/gorilla/mux"
+	"github.com/spf13/viper"
 )
 
 type Routes struct {
 	Router *mux.Router
+	Cart   *cart.Handler
+	Order  *order.Handler
 }
 
 func EnabledCors(next http.Handler) http.Handler {
@@ -100,7 +104,8 @@ func (r *Routes) SetupRouter() {
 	r.Router.Use(EnabledCors, LoggerMiddleware())
 
 	r.SetupBaseURL()
-	r.SetupUser()
+	r.SetupCart()
+	r.SetupOrder()
 }
 
 func (r *Routes) SetupBaseURL() {
@@ -110,7 +115,15 @@ func (r *Routes) SetupBaseURL() {
 	}
 }
 
-func (r *Routes) SetupUser() {
-	userRoutes := r.Router.PathPrefix("/users").Subrouter()
-	userRoutes.Use(middleware.Authentication)
+func (r *Routes) SetupCart() {
+	cartRoutes := r.Router.PathPrefix("/cart").Subrouter()
+	cartRoutes.HandleFunc("/{user_id}", r.Cart.GetCartByUserID).Methods(http.MethodGet, http.MethodOptions)
+	cartRoutes.HandleFunc("/update/{user_id}", r.Cart.UpdateCart).Methods(http.MethodPut, http.MethodOptions)
+	cartRoutes.HandleFunc("/add", r.Cart.AddCart).Methods(http.MethodPost, http.MethodOptions)
+	cartRoutes.HandleFunc("/delete/{user_id}", r.Cart.DeleteCart).Methods(http.MethodDelete, http.MethodOptions)
+}
+
+func (r *Routes) SetupOrder() {
+	orderRoutes := r.Router.PathPrefix("/order").Subrouter()
+	orderRoutes.HandleFunc("/create", r.Order.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
 }

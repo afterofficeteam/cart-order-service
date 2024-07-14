@@ -1,9 +1,14 @@
-APP_PORT: 9990
-BASE_URL_PATH: "/base-project"
+APP_PORT: 9993
+BASE_URL_PATH: "/cart-order-service"
 DB_SSL_MODE: "disable"
-DB_USER: localhost
+DB_USER: root
 DB_HOST: localhost
-DB_PASSWORD: postgres
-DB_NAME: base-project
+DB_PASSWORD: fatannajuda
+DB_NAME: db_order
 DB_DEBUG: true
 DB_PORT: 5432
+
+# Midtrans
+MERCHANT_ID: G380575798
+CLIENT_KEY: SB-Mid-client-5EiTk_oI-l39RY84
+SERVER_KEY: SB-Mid-server-jz-9ZTjDo8yA-5kZCU6rgDNr

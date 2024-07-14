@@ -1,19 +1,25 @@
 package main
 
 import (
-	"Base-Project/config"
-	"Base-Project/database"
-	"Base-Project/routes"
+	"cart-order-service/config"
+	"cart-order-service/database"
+	cartDto "cart-order-service/dto/cart"
+	cartHandler "cart-order-service/handler/cart"
+	"cart-order-service/repository/cart"
+	"cart-order-service/routes"
 	"database/sql"
-	"github.com/thedevsaddam/renderer"
 )
 
+// main is the main function that starts the application.
+// It loads the configuration, connects to the database, sets up the routes, and starts the server.
 func main() {
+	// Load the configuration
 	cfg, err := config.LoadConfig()
 	if err != nil {
 		return
 	}
 
+	// Connect to the database
 	sqlDb, err := database.ConnectToDatabase(database.Connection{
 		Host:     cfg.DBHost,
 		Port:     cfg.DBPort,
@@ -26,12 +32,21 @@ func main() {
 	}
 	defer sqlDb.Close()
 
-	render := renderer.New()
-	routes := setupRoutes(render, sqlDb)
+	// Set up the renderer and routes
+	routes := setupRoutes(sqlDb)
+
+	// Run the server
 	routes.Run(cfg.AppPort)
 }
 
-func setupRoutes(render *renderer.Render, myDb *sql.DB) *routes.Routes {
+// setupRoutes sets up the routes for the application.
+func setupRoutes(myDb *sql.DB) *routes.Routes {
+	cartRepository := cart.NewStore(myDb)
+	cartSvc := cartDto.NewCart(cartRepository)
+	cartHandler := cartHandler.NewHandler(cartSvc)
 
-	return &routes.Routes{}
+	// Return a new Routes instance
+	return &routes.Routes{
+		Cart: cartHandler,
+	}
 }

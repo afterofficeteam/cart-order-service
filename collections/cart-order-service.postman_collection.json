@@ -1,0 +1,587 @@
+{
+	"info": {
+		"_postman_id": "032abdde-7a8b-44cc-b3aa-580a8b0b861c",
+		"name": "cart-order-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23782154",
+		"_collection_link": "https://warped-moon-579958.postman.co/workspace/Eratani-Workspace~81bb18b1-9b2a-4822-8e88-dc1a676aef3b/collection/23782154-032abdde-7a8b-44cc-b3aa-580a8b0b861c?action=share&source=collection_link&creator=23782154"
+	},
+	"item": [
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Add cart",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"5e07efbc-b0dc-4b34-9f9e-038645d97622\",\n    \"product_id\": \"ebecbc2f-5b12-4edb-a0d7-dc13783c3f6a\",\n    \"Qty\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/cart/add",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"cart",
+								"add"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Add cart",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": \"5e07efbc-b0dc-4b34-9f9e-038645d97622\",\n    \"product_id\": \"ebecbc2f-5b12-4edb-a0d7-dc13783c3f6a\",\n    \"Qty\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9993/cart/add",
+									"host": [
+										"localhost"
+									],
+									"port": "9993",
+									"path": [
+										"cart",
+										"add"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, POST, GET, OPTIONS, PUT, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Jun 2024 14:02:04 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "\"270bd0ba-0449-4259-8dad-c306cb43f53a\""
+						}
+					]
+				},
+				{
+					"name": "Update qty and Delete",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": \"ebecbc2f-5b12-4edb-a0d7-dc13783c3f6a\",\n    \"qty\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/cart/update/5e07efbc-b0dc-4b34-9f9e-038645d97622",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"cart",
+								"update",
+								"5e07efbc-b0dc-4b34-9f9e-038645d97622"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update qty and Delete",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"product_id\": \"ebecbc2f-5b12-4edb-a0d7-dc13783c3f6a\",\n    \"qty\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9993/cart/update/5e07efbc-b0dc-4b34-9f9e-038645d97622",
+									"host": [
+										"localhost"
+									],
+									"port": "9993",
+									"path": [
+										"cart",
+										"update",
+										"5e07efbc-b0dc-4b34-9f9e-038645d97622"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, POST, GET, OPTIONS, PUT, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Jun 2024 14:02:47 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "26"
+								}
+							],
+							"cookie": [],
+							"body": "\"Product updated in cart\""
+						}
+					]
+				},
+				{
+					"name": "Get cart by user ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/cart/ee423792-8964-40e1-bdda-0368592a08d9",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"cart",
+								"ee423792-8964-40e1-bdda-0368592a08d9"
+							],
+							"query": [
+								{
+									"key": "product",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get cart by user ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:9993/cart/550e8400-e29b-41d4-a716-446655440000",
+									"host": [
+										"localhost"
+									],
+									"port": "9993",
+									"path": [
+										"cart",
+										"550e8400-e29b-41d4-a716-446655440000"
+									],
+									"query": [
+										{
+											"key": "product",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, POST, GET, OPTIONS, PUT, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Jun 2024 14:00:14 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "470"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"b17d2b39-650e-422d-83bd-b6d204c1493c\",\n        \"user_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"product_id\": \"550e8400-e29b-41d4-a716-446655440001\",\n        \"qty\": 2,\n        \"created_at\": \"2024-06-29T13:50:55.494801Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    },\n    {\n        \"id\": \"7e37fd04-041c-428e-8bb4-6c8829e5345f\",\n        \"user_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n        \"product_id\": \"550e8400-e29b-41d4-a716-446655440002\",\n        \"qty\": 1,\n        \"created_at\": \"2024-06-29T13:50:55.494801Z\",\n        \"updated_at\": null,\n        \"deleted_at\": null\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Deleted cart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": \"550e8400-e29b-41d4-a716-446655440006\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/cart/delete/550e8400-e29b-41d4-a716-446655440004",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"cart",
+								"delete",
+								"550e8400-e29b-41d4-a716-446655440004"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Deleted cart",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"product_id\": \"550e8400-e29b-41d4-a716-446655440006\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9993/cart/delete/550e8400-e29b-41d4-a716-446655440004",
+									"host": [
+										"localhost"
+									],
+									"port": "9993",
+									"path": [
+										"cart",
+										"delete",
+										"550e8400-e29b-41d4-a716-446655440004"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, POST, GET, OPTIONS, PUT, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Jun 2024 14:01:07 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "28"
+								}
+							],
+							"cookie": [],
+							"body": "\"Product deleted from cart\""
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"550e8400-e29b-41d4-a716-446655440004\",\n    \"payment_type_id\": \"550e8400-e29b-41d4-a716-446655440030\",\n    \"order_number\": \"ORD006\",\n    \"total_price\": 25000,\n    \"status\": \"Pending\",\n    \"is_paid\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/order/create",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": \"550e8400-e29b-41d4-a716-446655440004\",\n    \"payment_type_id\": \"550e8400-e29b-41d4-a716-446655440030\",\n    \"order_number\": \"ORD006\",\n    \"total_price\": 25000,\n    \"status\": \"Pending\",\n    \"is_paid\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9993/order/create",
+									"host": [
+										"localhost"
+									],
+									"port": "9993",
+									"path": [
+										"order",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, POST, GET, OPTIONS, PUT, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Jun 2024 14:35:21 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "\"7587bf38-0000-4a68-aa4c-d708fe094e31\""
+						}
+					]
+				},
+				{
+					"name": "Create Order Items",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": \"276f0412-d105-476d-9fbe-d6d73b19e8ce\",\n    \"product_id\": \"550e8400-e29b-41d4-a716-446655440003\",\n    \"qty\": 4,\n    \"price\": 100000,\n    \"product_name\": \"Product 1\",\n    \"subtotal_price\": 400000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/order/create/items",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"order",
+								"create",
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Order Items",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"order_id\": \"276f0412-d105-476d-9fbe-d6d73b19e8ce\",\n    \"product_id\": \"550e8400-e29b-41d4-a716-446655440003\",\n    \"qty\": 4,\n    \"price\": 100000,\n    \"product_name\": \"Product 1\",\n    \"subtotal_price\": 400000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9993/order/create/items",
+									"host": [
+										"localhost"
+									],
+									"port": "9993",
+									"path": [
+										"order",
+										"create",
+										"items"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Access-Control-Allow-Headers",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Methods",
+									"value": "DELETE, POST, GET, OPTIONS, PUT, PATCH"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Jun 2024 14:45:57 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "\"35e63fd8-396a-4bf1-9581-d35525489484\""
+						}
+					]
+				},
+				{
+					"name": "Create order items logs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": \"efc0c905-ddf0-4b72-8367-af593ef15484\",\n    \"from_status\": \"Pending\",\n    \"to_status\": \"Canceled\",\n    \"notes\": \"expiry time out 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9993/order/create/items/logs",
+							"host": [
+								"localhost"
+							],
+							"port": "9993",
+							"path": [
+								"order",
+								"create",
+								"items",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
