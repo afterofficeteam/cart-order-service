@@ -28,6 +28,14 @@ type Order struct {
 	DeleredAt     *time.Time  `json:"deleted_at"`
 }
 
+type ProductOrder struct {
+	ProductID     uuid.UUID `json:"product_id"`
+	ProductName   string    `json:"product_name"`
+	Price         float64   `json:"price"`
+	Qty           int       `json:"qty"`
+	SubtotalPrice float64   `json:"subtotal_price"`
+}
+
 type OrderItemsLogs struct {
 	OrderID    uuid.UUID  `json:"order_id"`
 	RefCode    string     `json:"ref_code"`

@@ -28,8 +28,8 @@ func (o *order) CreateOrder(bReq model.Order) (*string, error) {
 	refCode, err = o.store.CreateOrderItemsLogs(model.OrderItemsLogs{
 		OrderID:    *orderID,
 		RefCode:    *refCode,
-		FromStatus: model.OrderStatusPending,
-		ToStatus:   model.OrderStatusProcessing,
+		FromStatus: model.OrderStatusProcessing,
+		ToStatus:   model.OrderStatusPending,
 		Notes:      "Order created",
 	})
 	if err != nil {
