@@ -19,13 +19,13 @@ func NewOrder(store orderStore) *order {
 	return &order{store}
 }
 
-func (o *order) CreateOrder(bReq model.Order) (*string, error) {
+func (o *order) CreateOrder(bReq model.Order) (*uuid.UUID, error) {
 	orderID, refCode, err := o.store.CreateOrder(bReq)
 	if err != nil {
 		return nil, err
 	}
 
-	refCode, err = o.store.CreateOrderItemsLogs(model.OrderItemsLogs{
+	_, err = o.store.CreateOrderItemsLogs(model.OrderItemsLogs{
 		OrderID:    *orderID,
 		RefCode:    *refCode,
 		FromStatus: model.OrderStatusProcessing,
@@ -36,5 +36,5 @@ func (o *order) CreateOrder(bReq model.Order) (*string, error) {
 		return nil, err
 	}
 
-	return refCode, nil
+	return orderID, nil
 }

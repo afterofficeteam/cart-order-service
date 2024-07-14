@@ -8,10 +8,11 @@ import (
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/google/uuid"
 )
 
 type orderDto interface {
-	CreateOrder(bReq model.Order) (*string, error)
+	CreateOrder(bReq model.Order) (*uuid.UUID, error)
 }
 
 type Handler struct {
@@ -37,11 +38,11 @@ func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := h.order.CreateOrder(bReq)
+	bResp, err := h.order.CreateOrder(bReq)
 	if err != nil {
 		response.HandleResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	response.HandleResponse(w, http.StatusCreated, "Order Created Successfully")
+	response.HandleResponse(w, http.StatusCreated, bResp)
 }
