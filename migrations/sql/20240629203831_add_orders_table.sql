@@ -5,7 +5,6 @@ CREATE TABLE orders (
     user_id UUID NOT NULL,
     payment_type_id UUID NOT NULL,
     order_number VARCHAR(100) NOT NULL,
-    subtotal_price DOUBLE PRECISION NOT NULL,
     total_price DOUBLE PRECISION NOT NULL,
     product_order JSONB, -- Added qty in product_order
     status VARCHAR(50) NOT NULL,
