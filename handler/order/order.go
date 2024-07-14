@@ -1,6 +1,7 @@
 package order
 
 import (
+	"cart-order-service/helper/request"
 	"cart-order-service/helper/response"
 	"cart-order-service/repository/model"
 	"encoding/json"
@@ -53,11 +54,14 @@ func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	orderID, err := h.order.CreateOrder(bReq)
+	refCode := request.GenerateRefCode()
+	bReq.RefCode = refCode
+
+	_, err := h.order.CreateOrder(bReq)
 	if err != nil {
 		response.HandleResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	response.HandleResponse(w, http.StatusCreated, orderID)
+	response.HandleResponse(w, http.StatusCreated, "Order Created Successfully")
 }

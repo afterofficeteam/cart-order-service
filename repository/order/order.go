@@ -1,7 +1,6 @@
 package order
 
 import (
-	"cart-order-service/helper/request"
 	"cart-order-service/repository/model"
 	"database/sql"
 
@@ -41,7 +40,6 @@ func (o *store) CreateOrder(bReq model.Order) (*uuid.UUID, *string, error) {
 		) RETURNING id, ref_code
 	`
 
-	refcode := request.GenerateRefCode()
 	var orderID uuid.UUID
 	var refCode string
 	if err := tx.QueryRow(
@@ -54,7 +52,7 @@ func (o *store) CreateOrder(bReq model.Order) (*uuid.UUID, *string, error) {
 		bReq.ProductOrder,
 		bReq.Status,
 		bReq.IsPaid,
-		refcode,
+		bReq.RefCode,
 	).Scan(&orderID, &refCode); err != nil {
 		tx.Rollback()
 		return nil, nil, err
