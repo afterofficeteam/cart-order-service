@@ -53,11 +53,6 @@ func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if bReq.Status == "" {
-		response.HandleResponse(w, http.StatusBadRequest, "status is required")
-		return
-	}
-
 	orderID, err := h.order.CreateOrder(bReq)
 	if err != nil {
 		response.HandleResponse(w, http.StatusInternalServerError, err.Error())
