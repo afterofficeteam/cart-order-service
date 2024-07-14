@@ -7,19 +7,20 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/google/uuid"
+	"github.com/go-playground/validator/v10"
 )
 
 type orderDto interface {
-	CreateOrder(bReq model.Order) (*uuid.UUID, error)
+	CreateOrder(bReq model.Order) (*string, error)
 }
 
 type Handler struct {
-	order orderDto
+	order     orderDto
+	validator *validator.Validate
 }
 
-func NewHandler(order orderDto) *Handler {
-	return &Handler{order}
+func NewHandler(order orderDto, validator *validator.Validate) *Handler {
+	return &Handler{order, validator}
 }
 
 func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
@@ -29,33 +30,12 @@ func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if bReq.UserID == uuid.Nil || bReq.PaymentTypeID == uuid.Nil {
-		response.HandleResponse(w, http.StatusBadRequest, "user id or payment type id is required")
+	bReq.RefCode = request.GenerateRefCode()
+
+	if err := h.validator.Struct(bReq); err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
 		return
 	}
-
-	if bReq.PaymentTypeID == uuid.Nil {
-		response.HandleResponse(w, http.StatusBadRequest, "payment type id is required")
-		return
-	}
-
-	if bReq.OrderNumber == "" || bReq.Status == "" {
-		response.HandleResponse(w, http.StatusBadRequest, "order number or status is required")
-		return
-	}
-
-	if bReq.SubtotalPrice == 0 {
-		response.HandleResponse(w, http.StatusBadRequest, "subtotal price is required")
-		return
-	}
-
-	if bReq.TotalPrice == 0 {
-		response.HandleResponse(w, http.StatusBadRequest, "total price is required")
-		return
-	}
-
-	refCode := request.GenerateRefCode()
-	bReq.RefCode = refCode
 
 	_, err := h.order.CreateOrder(bReq)
 	if err != nil {

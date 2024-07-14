@@ -14,13 +14,13 @@ var (
 )
 
 type Order struct {
-	UserID        uuid.UUID   `json:"user_id"`
-	PaymentTypeID uuid.UUID   `json:"payment_type_id"`
-	OrderNumber   string      `json:"order_number"`
-	SubtotalPrice float64     `json:"subtotal_price"`
-	TotalPrice    float64     `json:"total_price"`
+	UserID        uuid.UUID   `json:"user_id" validate:"required"`
+	PaymentTypeID uuid.UUID   `json:"payment_type_id" validate:"required"`
+	OrderNumber   string      `json:"order_number" validate:"required"`
+	SubtotalPrice float64     `json:"subtotal_price" validate:"required"`
+	TotalPrice    float64     `json:"total_price" validate:"required"`
 	ProductOrder  interface{} `json:"product_order"`
-	Status        string      `json:"status"`
+	Status        string      `json:"status" validate:"required"`
 	IsPaid        bool        `json:"is_paid"`
 	RefCode       string      `json:"ref_code"`
 	CreatedAt     *time.Time  `json:"created_at"`
