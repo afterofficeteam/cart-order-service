@@ -46,4 +46,8 @@ type OrderItemsLogs struct {
 }
 
 type RequestCallback struct {
+	OrderID   uuid.UUID  `json:"order_id" validate:"required"`
+	Status    string     `json:"status" validate:"required"`
+	IsPaid    bool       `json:"is_paid"`
+	UpdatedAt *time.Time `json:"updated_at"`
 }

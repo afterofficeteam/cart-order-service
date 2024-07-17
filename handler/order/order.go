@@ -9,10 +9,13 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
+	"github.com/gorilla/mux"
 )
 
 type orderDto interface {
 	CreateOrder(bReq model.Order) (*uuid.UUID, error)
+	CallbackPayment(bReq model.RequestCallback) (*string, error)
+	GetOrderStatus(userID, orderID uuid.UUID) (*model.Order, error)
 }
 
 type Handler struct {
@@ -47,6 +50,50 @@ func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	response.HandleResponse(w, http.StatusCreated, bResp)
 }
 
+func (h *Handler) GetOrderStatus(w http.ResponseWriter, r *http.Request) {
+	UserId := mux.Vars(r)["user_id"]
+	OrderId := r.URL.Query().Get("order_id")
+	OrderIdUUID, err := uuid.Parse(OrderId)
+	if err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	UserIDUUID, err := uuid.Parse(UserId)
+	if err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// Get order status
+	bResp, err := h.order.GetOrderStatus(UserIDUUID, OrderIdUUID)
+	if err != nil {
+		response.HandleResponse(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	response.HandleResponse(w, http.StatusOK, bResp)
+}
+
 func (h *Handler) CallbackPayment(w http.ResponseWriter, r *http.Request) {
+	var bReq model.RequestCallback
+	if err := json.NewDecoder(r.Body).Decode(&bReq); err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err := h.validator.Struct(&bReq); err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	// payment success
+	message, err := h.order.CallbackPayment(bReq)
+	if err != nil {
+		response.HandleResponse(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	response.HandleResponse(w, http.StatusOK, message)
 
 }
