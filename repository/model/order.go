@@ -44,3 +44,6 @@ type OrderItemsLogs struct {
 	Notes      string     `json:"notes"`
 	CreatedAt  *time.Time `json:"created_at"`
 }
+
+type RequestCallback struct {
+}

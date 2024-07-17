@@ -46,3 +46,7 @@ func (h *Handler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 
 	response.HandleResponse(w, http.StatusCreated, bResp)
 }
+
+func (h *Handler) CallbackPayment(w http.ResponseWriter, r *http.Request) {
+
+}

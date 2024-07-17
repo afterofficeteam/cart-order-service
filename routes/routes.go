@@ -126,4 +126,5 @@ func (r *Routes) SetupCart() {
 func (r *Routes) SetupOrder() {
 	orderRoutes := r.Router.PathPrefix("/order").Subrouter()
 	orderRoutes.HandleFunc("/create", r.Order.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
+	orderRoutes.HandleFunc("/callback", r.Order.CallbackPayment).Methods(http.MethodPost, http.MethodOptions)
 }
