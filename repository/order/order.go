@@ -3,6 +3,7 @@ package order
 import (
 	"cart-order-service/repository/model"
 	"database/sql"
+	"errors"
 
 	"github.com/google/uuid"
 )
@@ -171,4 +172,30 @@ func (o *store) GetOrderStatus(userID, orderID uuid.UUID) (*model.Order, error) 
 	}
 
 	return &order, nil
+}
+
+func (o *store) UpdateStatus(req model.UpdateStatus) error {
+	tx, err := o.db.Begin()
+	if err != nil {
+		return err
+	}
+
+	query := `
+		UPDATE orders SET
+			status = $1,
+			updated_at = NOW()
+		WHERE user_id = $2 AND id = $3
+	`
+
+	if _, err := tx.Exec(query, req.Status, req.UserID, req.OrderID); err != nil {
+		tx.Rollback()
+		return errors.New("failed to update order status")
+	}
+
+	if err := tx.Commit(); err != nil {
+		tx.Rollback()
+		return errors.New("failed to commit transaction")
+	}
+
+	return nil
 }

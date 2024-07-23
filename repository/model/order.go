@@ -12,6 +12,7 @@ var (
 	OrderStatusProcessing = "processing"
 	OrderStatusCompleted  = "completed"
 	OrderStatusCancelled  = "cancelled"
+	OrderStatusPakcing    = "packing"
 )
 
 type Order struct {
@@ -50,4 +51,10 @@ type RequestCallback struct {
 	Status    string     `json:"status" validate:"required"`
 	IsPaid    bool       `json:"is_paid"`
 	UpdatedAt *time.Time `json:"updated_at"`
+}
+
+type UpdateStatus struct {
+	UserID  uuid.UUID `json:"user_id" validate:"required"`
+	OrderID uuid.UUID `json:"order_id" validate:"required"`
+	Status  string    `json:"status" validate:"required"`
 }
