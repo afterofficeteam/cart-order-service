@@ -12,6 +12,8 @@ type orderStore interface {
 	UpdateOrder(bReq model.RequestCallback) (*string, error)
 	GetOrderStatus(userID, orderID uuid.UUID) (*model.Order, error)
 	UpdateStatus(req model.UpdateStatus) error
+	UpdateShipping(req model.RequestUpdateShipping) (*string, error)
+	CreateShippingLogs(orderID uuid.UUID, refCode, shippingStatusFrom, shippingStatusTo, notes string) error
 }
 
 type order struct {
@@ -70,6 +72,20 @@ func (o *order) GetOrderStatus(userID, orderID uuid.UUID) (*model.Order, error) 
 func (o *order) UpdateStatus(req model.UpdateStatus) (*string, error) {
 	successMessage := "Update status success"
 	if err := o.store.UpdateStatus(req); err != nil {
+		return nil, err
+	}
+
+	return &successMessage, nil
+}
+
+func (o *order) UpdateShipping(req model.RequestUpdateShipping) (*string, error) {
+	successMessage := "Update shipping status success"
+	refCode, err := o.store.UpdateShipping(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := o.store.CreateShippingLogs(req.OrderID, *refCode, "", req.ShippingStatusFrom, req.ShippingStatusTo); err != nil {
 		return nil, err
 	}
 

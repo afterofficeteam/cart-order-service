@@ -14,6 +14,7 @@ var (
 	OrderStatusCancelled  = "cancelled"
 	OrderStatusPakcing    = "packing"
 	OrderStatusPaid       = "paid"
+	OrderStatusPacking    = "pickup"
 )
 
 type Order struct {
@@ -58,4 +59,11 @@ type UpdateStatus struct {
 	UserID  uuid.UUID `json:"user_id" validate:"required"`
 	OrderID uuid.UUID `json:"order_id" validate:"required"`
 	Status  string    `json:"status" validate:"required"`
+}
+
+type RequestUpdateShipping struct {
+	UserID             uuid.UUID `json:"user_id" validate:"required"`
+	OrderID            uuid.UUID `json:"order_id" validate:"required"`
+	ShippingStatusFrom string    `json:"shipping_status_from" validate:"required"`
+	ShippingStatusTo   string    `json:"shipping_status_to" validate:"required"`
 }

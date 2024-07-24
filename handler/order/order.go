@@ -17,6 +17,7 @@ type orderDto interface {
 	CallbackPayment(bReq model.RequestCallback) (*string, error)
 	GetOrderStatus(userID, orderID uuid.UUID) (*model.Order, error)
 	UpdateStatus(req model.UpdateStatus) (*string, error)
+	UpdateShipping(req model.RequestUpdateShipping) (*string, error)
 }
 
 type Handler struct {
@@ -119,4 +120,25 @@ func (h *Handler) UpdateStatus(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response.HandleResponse(w, http.StatusOK, message)
+}
+
+func (h *Handler) UpdateShipping(w http.ResponseWriter, r *http.Request) {
+	var bReq model.RequestUpdateShipping
+	if err := json.NewDecoder(r.Body).Decode(&bReq); err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if err := h.validator.Struct(&bReq); err != nil {
+		response.HandleResponse(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	message, err := h.order.UpdateShipping(bReq)
+	if err != nil {
+		response.HandleResponse(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	response.HandleResponse(w, http.StatusCreated, message)
 }

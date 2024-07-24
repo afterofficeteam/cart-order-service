@@ -129,4 +129,5 @@ func (r *Routes) SetupOrder() {
 	orderRoutes.HandleFunc("/callback", r.Order.CallbackPayment).Methods(http.MethodPost, http.MethodOptions)
 	orderRoutes.HandleFunc("/status/{user_id}", r.Order.GetOrderStatus).Methods(http.MethodGet, http.MethodOptions)
 	orderRoutes.HandleFunc("/status/update", r.Order.UpdateStatus).Methods(http.MethodPut, http.MethodOptions)
+	orderRoutes.HandleFunc("/shipping/update", r.Order.UpdateShipping).Methods(http.MethodPut, http.MethodOptions)
 }

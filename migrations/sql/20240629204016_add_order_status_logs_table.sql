@@ -16,4 +16,5 @@ CREATE TABLE order_status_logs (
 -- +goose Down
 -- +goose StatementBegin
     DROP TABLE IF EXISTS order_status_logs CASCADE;
+    DROP TABLE IF EXISTS shippings_logs CASCADE;
 -- +goose StatementEnd

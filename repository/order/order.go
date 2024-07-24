@@ -199,3 +199,63 @@ func (o *store) UpdateStatus(req model.UpdateStatus) error {
 
 	return nil
 }
+
+func (o *store) UpdateShipping(req model.RequestUpdateShipping) (*string, error) {
+	tx, err := o.db.Begin()
+	if err != nil {
+		return nil, err
+	}
+
+	var refCode string
+	query := `
+		UPDATE orders SET
+			status = $1,
+			updated_at = NOW()
+		WHERE user_id = $2 AND id = $3
+		RETURNING ref_code
+	`
+
+	if err := tx.QueryRow(query, req.ShippingStatusTo, req.UserID, req.OrderID).Scan(&refCode); err != nil {
+		tx.Rollback()
+		return nil, errors.New("failed to update shipping status")
+	}
+
+	if err := tx.Commit(); err != nil {
+		tx.Rollback()
+		return nil, errors.New("failed to commit transaction")
+	}
+
+	return &refCode, nil
+}
+
+func (o *store) CreateShippingLogs(orderID uuid.UUID, refCode, shippingStatusFrom, shippingStatusTo, notes string) error {
+	tx, err := o.db.Begin()
+	if err != nil {
+		return err
+	}
+
+	query := `
+		INSERT INTO order_shipping_logs (
+			order_id,
+			ref_code,
+			shipping_status_from,
+			shipping_status_from,
+			notes,
+			update_at
+		) VALUES (
+			$1, $2, $3, $4, $5, NOW()
+		)
+	`
+
+	if _, err := tx.Exec(query, orderID, refCode, shippingStatusFrom, shippingStatusTo, notes); err != nil {
+		tx.Rollback()
+		return errors.New("failed to create shipping logs")
+	}
+
+	if err := tx.Commit(); err != nil {
+		tx.Rollback()
+		return errors.New("failed to commit transaction")
+	}
+
+	return nil
+}
