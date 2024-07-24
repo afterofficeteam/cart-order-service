@@ -31,7 +31,7 @@ func (o *order) CreateOrder(bReq model.Order) (*uuid.UUID, error) {
 	_, err = o.store.CreateOrderItemsLogs(model.OrderItemsLogs{
 		OrderID:    *orderID,
 		RefCode:    *refCode,
-		FromStatus: model.OrderStatusProcessing,
+		FromStatus: "",
 		ToStatus:   model.OrderStatusPending,
 		Notes:      "Order created",
 	})
@@ -53,7 +53,7 @@ func (o *order) CallbackPayment(bReq model.RequestCallback) (*string, error) {
 		OrderID:    bReq.OrderID,
 		RefCode:    *refCode,
 		FromStatus: model.OrderStatusPending,
-		ToStatus:   model.OrderStatusCompleted,
+		ToStatus:   model.OrderStatusPaid,
 		Notes:      "Payment success",
 	})
 	if err != nil {

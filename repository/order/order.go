@@ -74,7 +74,7 @@ func (o *store) UpdateOrder(bReq model.RequestCallback) (*string, error) {
 	queryUpdate := `
 		UPDATE orders SET
 			status = $1,
-			is_paid = $2,
+			is_paid = $2, 
 			updated_at = NOW()
 		WHERE id = $3 RETURNING ref_code
 	`

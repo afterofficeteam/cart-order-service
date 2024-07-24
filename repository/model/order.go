@@ -13,6 +13,7 @@ var (
 	OrderStatusCompleted  = "completed"
 	OrderStatusCancelled  = "cancelled"
 	OrderStatusPakcing    = "packing"
+	OrderStatusPaid       = "paid"
 )
 
 type Order struct {
